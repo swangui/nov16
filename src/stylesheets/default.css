@@ -31,19 +31,47 @@ nav {
 .sidebar {
   flex: 0 0 300px;
   padding: 0 10px;
-  border-right: 2px solid #ccc;
   border-bottom: 2px solid red;
 }
 .viewport {
   flex: 1 1 100%;
-  border-top: 2px solid #ccc;
+  border-left: 2px solid #d3edff;
+  border-top: 2px solid #d3edff;
+  display: flex;
+  flex-direction: column;
+}
+.vp-row {
+  flex: 1 1 50%;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  align-content: flex-start;
+  align-content: stretch;
+}
+.vp-row.first-row {
+  flex: 0 0 150px;
 }
 .bloc {
-  flex: 1 0 33%;
+  flex: 1 0 50%;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+  height: 100%;
+}
+.bloc.perf {
+  flex: 0 0 220px;
+}
+.bloc.provided {
+
+}
+.bloc.console {
+  display: flex;
+  flex-direction: column;
+}
+.bloc.console>h5 {
+  flex: 0 0 20px;
+}
+.bloc.console>textarea.ta-console {
+  flex: 1 1 100%;
+  resize: none;
 }
 .hd-toggler {
   cursor: pointer;

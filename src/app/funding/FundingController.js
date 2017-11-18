@@ -4,6 +4,9 @@ export default class FundingController{
   constructor($scope){
       this.strategy = ['FRR', 'CI', 'ON'];
       this.sIndex = 0;
+      this.state = {
+          sIndex: 0,
+      };
   }
 
 }

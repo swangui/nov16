@@ -128,67 +128,54 @@
     </div>
   </div>
   <div class="viewport">
-    <div class="bloc">
-      <h5 class="hd-toggler"
-          ng-init="
-            isReportVisible = true;
-          "
-          ng-click="
-            isReportVisible = !!!isReportVisible;
-          ">
-        <i class="fa"
-           ng-class="
-             isReportVisible === true ? 'fa-angle-down' : 'fa-angle-right'
-           " aria-hidden="true"></i>
-        Realtime Performance
-      </h5>
-      <div ng-show="isReportVisible === true">
-        <table class="table table-condensed">
-          <tr>
-            <td class="fieldname" width="120">Strategy</td>
-            <td class="number">First Buyer</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="fieldname">Provided</td>
-            <td class="number" width="100">9,000.00</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="fieldname">Balance</td>
-            <td class="number">1,000.00</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="fieldname">Total</td>
-            <td class="number">10,000.00</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="fieldname">Funding Efficiency</td>
-            <td class="number">90.00%</td>
-            <td></td>
-          </tr>
-        </table>
+    <div class="vp-row first-row">
+      <div class="bloc perf">
+        <h5>
+          Realtime Performance
+        </h5>
+        <div>
+          <table class="table table-condensed">
+            <tr>
+              <td class="fieldname" width="120">Provided</td>
+              <td class="number">9,000.00</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="fieldname">Balance</td>
+              <td class="number">1,000.00</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="fieldname">Total</td>
+              <td class="number">10,000.00</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="fieldname">Funding Efficiency</td>
+              <td class="number">90.00%</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="bloc provided">
+        <h5>
+          Provided
+        </h5>
       </div>
     </div>
-    <div class="bloc">
-      <h5 class="hd-toggler">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
-        Provided
-      </h5>
-    </div>
-    <div class="bloc">
-      <h5 class="hd-toggler">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
-        Log
-      </h5>
-    </div>
-    <div class="bloc">
-      <h5 class="hd-toggler">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
-        Order Book
-      </h5>
+    <div class="vp-row">
+      <div class="bloc console">
+        <h5>
+          Log
+        </h5>
+        <textarea class="ta-console"></textarea>
+      </div>
+      <div class="bloc">
+        <h5>
+          Order Book
+        </h5>
+      </div>
     </div>
   </div>
 </div>
