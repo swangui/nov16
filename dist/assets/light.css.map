@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets/light.less"],"names":[],"mappings":"AAAA,OAMI,WAAA,MACA,MAAA","sourcesContent":[".light{\n\n    @background:green;\n    @color:yellow;\n    //@import \"light\";\n  \n    background:@background;\n    color:@color;\n    \n}\n"],"file":"light.css"}

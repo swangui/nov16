@@ -1,0 +1,102 @@
+html, body {
+  height: 100%;
+}
+body {
+  background: #fff;
+  font-size: 12px !important;
+  display: flex;
+  flex-direction: column;
+}
+nav {
+  flex: 0 0;
+}
+.content-area {
+  flex: 1 1 100%;
+}
+.table {
+  font-size: 11px;
+}
+.fieldname {
+  text-align: right;
+  font-weight: bold;
+}
+.number {
+  text-align: right;
+  font-weight: bold;
+}
+.inner-space {
+  display: flex;
+  height: 100%;
+}
+.sidebar {
+  flex: 0 0 300px;
+  padding: 0 10px;
+  border-right: 2px solid #ccc;
+  border-bottom: 2px solid red;
+}
+.viewport {
+  flex: 1 1 100%;
+  border-top: 2px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.bloc {
+  flex: 1 0 33%;
+}
+.hd-toggler {
+  cursor: pointer;
+}
+.input-group-addon {
+  width: 35px !important;
+  padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: left;
+}
+input[type="number"] {
+  width: 70px !important;
+}
+input[type="radio"], input[type="checkbox"] {
+  margin-top: 0px !important;
+}
+.inner-panel {
+  margin: 1px;
+}
+.nl label {
+  display: block !important;
+}
+.form-group-inline {
+  display: inline-block !important;
+  margin-right: 10px;
+  margin-bottom: 15px;
+}
+.form-group-inline:last-child {
+  margin-right: 0;
+}
+.label-inline {
+  display: inline-block !important;
+  margin-right: 0px;
+  margin-bottom: 15px;
+  padding: 10px 10px 10px 30px !important;
+}
+.label-inline.hl {
+  border: 1px solid #3b99fc;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid #fff;
+}
+.label-inline:last-child {
+  margin-right: 0;
+}
+.sub-form {
+  border: 1px solid #3b99fc;
+  border-radius: 5px;
+  padding: 10px;
+  padding-bottom: 0;
+  margin-top: -11px;
+}
+.radio {
+  margin-top: 0 !important;
+}

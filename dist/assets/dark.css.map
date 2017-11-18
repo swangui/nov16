@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets/dark.less"],"names":[],"mappings":"AAAA,MAMI,WAAA,KACA,MAAA","sourcesContent":[".dark{\n\n    @background:black;\n    @color:blue;\n    //@import \"light\";\n  \n    background:@background;\n    color:@color;\n    \n}\n"],"file":"dark.css"}
