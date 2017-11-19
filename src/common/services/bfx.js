@@ -21,7 +21,7 @@ class BitfinexApi{
   }
 
   testConn() {
-    this.ConsoleService.log('Testing wss connection');
+    this.ConsoleService.log('Testing wss connection now');
     const url = this.apiConfig.wss.url;
     const wss = new WebSocket(url);
     wss.onmessage = (msg) => console.log(msg.data)

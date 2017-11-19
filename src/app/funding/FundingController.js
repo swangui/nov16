@@ -20,6 +20,8 @@ export default class FundingController{
               ctrl.api_secret = $localStorage.api.secret;
           });
       }
+
+      this.testConn();
   }
 
   saveApiCredentials() {
