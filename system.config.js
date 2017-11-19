@@ -75,6 +75,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.36",
     "font-awesome": "npm:font-awesome@4.7.0",
     "json": "github:systemjs/plugin-json@0.1.2",
+    "moment": "npm:moment@2.19.2",
     "ngstorage": "npm:ngstorage@0.3.11",
     "ocLazyLoad": "github:ocombe/oclazyload@1.0.9",
     "systemjs/plugin-css": "github:systemjs/plugin-css@0.1.36",
@@ -194,6 +195,9 @@ System.config({
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "npm:inherits@2.0.3": {
+      "util": "github:jspm/nodelibs-util@0.1.0"
+    },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"
     },
@@ -212,7 +216,7 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "core-util-is": "npm:core-util-is@1.0.2",
       "events": "github:jspm/nodelibs-events@0.1.1",
-      "inherits": "npm:inherits@2.0.1",
+      "inherits": "npm:inherits@2.0.3",
       "isarray": "npm:isarray@0.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "stream-browserify": "npm:stream-browserify@1.0.0",

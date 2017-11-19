@@ -65,13 +65,26 @@ nav {
 .bloc.console {
   display: flex;
   flex-direction: column;
+  background: #000;
 }
 .bloc.console>h5 {
   flex: 0 0 20px;
+  color: #eee;
 }
-.bloc.console>textarea.ta-console {
+.bloc.console>console {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+}
+.bloc.console>console>textarea {
   flex: 1 1 100%;
   resize: none;
+  outline: none;
+  background: #000;
+  color: #eee;
+  font-family: monospace;
+  border: none;
+  font-size: 11px;
 }
 .hd-toggler {
   cursor: pointer;
