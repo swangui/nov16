@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/login/login.less"],"names":[],"mappings":"AAAA,KACE,UAAA,KAGF,SACE,iBAAsB,wCACtB,OAAA,MACA,MAAA","sourcesContent":["body{\n  font-size:20px;\n}\n\n.content{\n  background-image: url('../../assets/images/mind-blown.gif');\n  height: 200px;\n  width: 200px;\n}\n"],"file":"login.css"}
