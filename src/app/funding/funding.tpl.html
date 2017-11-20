@@ -85,7 +85,8 @@
           <div class="form-group form-group-sm">
             <label for="strategy">Strategy</label>
             <div class="radio">
-              <label class="label-inline">
+              <label class="label-inline"
+                     ng-class="ctrl.sIndex === 0 ? 'hl' : ''">
                 <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
                        ng-checked="ctrl.sIndex === 0"
                        ng-click="ctrl.sIndex = 0">
@@ -105,6 +106,15 @@
                        ng-click="ctrl.sIndex = 2">
                 Offer Now
               </label>
+            </div>
+            <div ng-show="ctrl.sIndex === 0" class="sub-form">
+              <div class="form-group-inline form-group-sm">
+                <label for="frr_delta">Delta Percentage</label>
+                <div class="input-group">
+                  <input type="number" min="0" max="100" class="form-control input-sm text-right" id="frr_delta" value="0" step="1">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
             </div>
             <div ng-show="ctrl.sIndex === 1" class="sub-form">
               <div>Offer lower than the First Ask by</div>
@@ -151,28 +161,37 @@
     <div class="vp-row first-row">
       <div class="bloc perf">
         <h5>
-          Realtime Performance
+          Realtime Funding Statistics
         </h5>
-        <div>
+        <div ng-show="ctrl.fundingStats.length === 0">
+          <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        </div>
+        <div ng-show="ctrl.fundingStats.length > 0">
           <table class="table table-condensed">
             <tr>
-              <td class="fieldname" width="120">Provided</td>
-              <td class="number">9,000.00</td>
+              <td width="120" class="fieldname"></td>
+              <td width="80" class="number"
+                  ng-repeat="funding in ctrl.fundingStats">{{funding.currency}}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="fieldname">Provided</td>
+              <td class="number" ng-repeat="funding in ctrl.fundingStats">-</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="fieldname">Unused</td>
+              <td class="number" ng-repeat="funding in ctrl.fundingStats">-</td>
               <td></td>
             </tr>
             <tr>
               <td class="fieldname">Balance</td>
-              <td class="number">1,000.00</td>
+              <td class="number" ng-repeat="funding in ctrl.fundingStats">{{funding.balance}}</td>
               <td></td>
             </tr>
             <tr>
-              <td class="fieldname">Total</td>
-              <td class="number">10,000.00</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="fieldname">Funding Efficiency</td>
-              <td class="number">90.00%</td>
+              <td class="fieldname">Funding&nbsp;Efficiency</td>
+              <td class="number" ng-repeat="funding in ctrl.fundingStats">-</td>
               <td></td>
             </tr>
           </table>
@@ -180,8 +199,41 @@
       </div>
       <div class="bloc provided">
         <h5>
-          Provided
+          Provided (More fields)
         </h5>
+        <div class="scrollable-table">
+          <div class="thead-cover"></div>
+          <table class="table table-condensed">
+            <tr>
+              <!--<td>ID</td>-->
+              <td>Currency<div>Currency</div></td>
+              <!--<td>Opened</td>-->
+              <td>Created<div>Created</div></td>
+              <!--<td>Updated</td>-->
+              <td>Last Payout<div>Last Payout</div></td>
+              <td>Amount<div>Amount</div></td>
+              <td>Status<div>Status</div></td>
+              <td>Rate %<div>Rate %</div></td>
+              <td>Term<div>Term</div></td>
+              <td>Hidden<div>Hidden</div></td>
+              <td>Renew<div>Renew</div></td>
+            </tr>
+            <tr ng-repeat="provided in ctrl.fundingProvided">
+              <!--<td>{{provided.ID}}</td>-->
+              <td>{{provided.SYMBOL}}</td>
+              <!--<td>{{provided.MTS_OPENING}}</td>-->
+              <td>{{provided.MTS_CREATE}}</td>
+              <!--<td>{{provided.MTS_UPDATE}}</td>-->
+              <td>{{provided.MTS_LAST_PAYOUT}}</td>
+              <td>{{provided.AMOUNT}}</td>
+              <td>{{provided.STATUS}}</td>
+              <td>{{provided.RATE_REAL}}</td>
+              <td>{{provided.PERIOD}}</td>
+              <td>{{provided.HIDDEN}}</td>
+              <td>{{provided.RENEW}}</td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
     <div class="vp-row">

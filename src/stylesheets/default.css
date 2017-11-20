@@ -17,6 +17,9 @@ nav {
 .table {
   font-size: 11px;
 }
+.table tr:first-child td {
+  border-top: none;
+}
 .fieldname {
   text-align: right;
   font-weight: bold;
@@ -45,23 +48,44 @@ nav {
   flex: 1 1 50%;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: stretch;
   align-content: stretch;
 }
 .vp-row.first-row {
-  flex: 0 0 150px;
+  flex: 0 0 auto;
 }
 .bloc {
   flex: 1 0 50%;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
+  border-right: none;
+  border-bottom: none;
   padding: 0 10px;
-  height: 100%;
+  min-height: 200px;
 }
 .bloc.perf {
-  flex: 0 0 220px;
+  flex: 1 0 240px;
 }
 .bloc.provided {
-
+  flex: 1 0 600px;
+}
+.bloc.provided .scrollable-table {
+  height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.bloc.provided .thead-cover {
+  height: 26px;
+  width: 100%;
+  background: #fff;
+  margin-bottom: -26px;
+  position: absolute;
+}
+.bloc.provided td>div {
+  position: absolute;
+  background: #fff;
+  margin-top: -21px;
+  margin-left: -5px;
+  padding: 5px 4px;
 }
 .bloc.console {
   display: flex;
@@ -141,4 +165,5 @@ input[type="radio"], input[type="checkbox"] {
 }
 .radio {
   margin-top: 0 !important;
+  left: 10px;
 }

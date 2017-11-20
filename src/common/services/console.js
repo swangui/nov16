@@ -29,6 +29,13 @@ class ConsoleService{
       }
   }
 
+  rx() {
+      let messages = Array.prototype.slice.call(arguments);
+      messages.splice(0, 0, 'RX');
+      let message = messages.join(' ');
+      this.log(message);
+  }
+
   setTextarea(textarea) {
       this.textarea = textarea;
   }

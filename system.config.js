@@ -72,12 +72,14 @@ System.config({
     "bootstrap4": "npm:bootstrap@4.0.0-beta.2",
     "clean-css": "npm:clean-css@3.4.12",
     "core-js": "npm:core-js@1.2.6",
+    "crypto-js": "npm:crypto-js@3.1.9-1",
     "css": "github:systemjs/plugin-css@0.1.36",
     "font-awesome": "npm:font-awesome@4.7.0",
     "json": "github:systemjs/plugin-json@0.1.2",
     "moment": "npm:moment@2.19.2",
     "ngstorage": "npm:ngstorage@0.3.11",
     "ocLazyLoad": "github:ocombe/oclazyload@1.0.9",
+    "ramda": "npm:ramda@0.25.0",
     "systemjs/plugin-css": "github:systemjs/plugin-css@0.1.36",
     "ui-router-extras": "npm:ui-router-extras@0.0.14",
     "github:angular-ui/ui-router@0.2.18": {
@@ -183,6 +185,10 @@ System.config({
     "npm:core-util-is@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1"
     },
+    "npm:crypto-js@3.1.9-1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:font-awesome@4.7.0": {
       "css": "github:systemjs/plugin-css@0.1.36"
     },
@@ -193,9 +199,6 @@ System.config({
       "http": "github:jspm/nodelibs-http@1.7.1"
     },
     "npm:inherits@2.0.1": {
-      "util": "github:jspm/nodelibs-util@0.1.0"
-    },
-    "npm:inherits@2.0.3": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:os-browserify@0.1.2": {
@@ -212,11 +215,14 @@ System.config({
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:ramda@0.25.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:readable-stream@1.1.14": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "core-util-is": "npm:core-util-is@1.0.2",
       "events": "github:jspm/nodelibs-events@0.1.1",
-      "inherits": "npm:inherits@2.0.3",
+      "inherits": "npm:inherits@2.0.1",
       "isarray": "npm:isarray@0.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "stream-browserify": "npm:stream-browserify@1.0.0",
