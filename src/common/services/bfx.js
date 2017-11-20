@@ -1,6 +1,7 @@
 import angular from 'angular';
 
-import crypto from 'crypto-js';
+import HmacSHA384 from 'crypto-js/hmac-sha384';
+import EncHex from 'crypto-js/enc-hex';
 import ConsoleServiceModule from 'common/services/console';
 
 class BitfinexApi{
@@ -69,9 +70,8 @@ class BitfinexApi{
 
     const authNonce = Date.now() * 1000
     const authPayload = 'AUTH' + authNonce
-    const authSig = crypto
-      .HmacSHA384(authPayload, apiSecret)
-      .toString(crypto.enc.Hex)
+    const authSig = HmacSHA384(authPayload, apiSecret)
+      .toString(EncHex)
     
     const payload = {
       apiKey,

@@ -1,4 +1,5 @@
-import R from 'ramda';
+const R = require('ramda');
+
 import moment from 'moment';
 
 export default class FundingController{
