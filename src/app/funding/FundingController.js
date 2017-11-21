@@ -34,7 +34,7 @@ export default class FundingController{
               .map(f => {
                    return {
                        currency: f[1],
-                       balance: f[1] === 'USD' ? f[2].toFixed(2) : f[2],
+                       balance: f[1] === 'USD' ? this.round(f[2], 2) : f[2],
                    }
               })
           this.updateFundingStats(fundingStats);
@@ -70,9 +70,8 @@ export default class FundingController{
               ], credit);
 
               credit.SYMBOL = credit.SYMBOL.replace(/^f/, '');
-              credit.RATE_REAL = credit.RATE === 0 ?
-                                 credit.RATE_REAL * 100 + ' FRR':
-                                 credit.RATE_REAL * 100;
+              credit.RATE = this.round(credit.RATE * 100, 6);
+              credit.RATE_REAL = this.round(credit.RATE_REAL * 100, 6);
               /*
               credit.MTS_CREATE = moment(credit.MTS_CREATE).format('Y/M/D HH:mm:ss');
               credit.MTS_UPDATE = moment(credit.MTS_UPDATE).format('Y/M/D HH:mm:ss');
@@ -92,6 +91,38 @@ export default class FundingController{
       });
   }
 
+  round(number, adjust) {
+      const shift = Math.pow(10, adjust);
+      return Math.round(number * shift)/shift;
+  }
+
+  updateFundingDetailsUnderCurrency(credits) {
+      this.fundingStats.map(funding => {
+          const provided = R.pipe(
+            R.filter(
+              R.allPass([
+                R.propEq('SYMBOL', funding.currency),
+                R.propEq('SIDE', 1)
+              ])
+            ),
+            R.pluck('AMOUNT'),
+            R.sum
+          )(credits);
+
+          const unused = funding.balance - provided;
+          const efficiency = provided/funding.balance * 100;
+
+          funding.provided = funding.currency === 'USD'
+                           ? this.round(provided, 2)
+                           : provided;
+          funding.unused = funding.currency === 'USD'
+                           ? this.round(unused, 2)
+                           : unused;
+          funding.efficiency = this.round(efficiency, 2);
+          return funding;
+      });
+  }
+
   updateFundingStats(stats) {
       this.fundingStats = stats;
       this.$scope.$apply();
@@ -99,6 +130,7 @@ export default class FundingController{
 
   updateFundingProvided(credits) {
       this.fundingProvided = credits;
+      this.updateFundingDetailsUnderCurrency(credits);
       this.$scope.$apply();
   }
 

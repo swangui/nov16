@@ -16,13 +16,13 @@ class ConsoleService{
       let messages = Array.prototype.slice.call(arguments);
       let message = messages.join(' ');
       if (!this.textarea) {
-          this.buffer += moment().format('Y/M/D HH:mm:ss') + ' - ' + message + '\n';
+          this.buffer += moment().format('Y/M/D HH:mm:ss') + '\n' + message + '\n';
       } else {
           let buffer = this.buffer + this.textarea[0].value;
           if (arguments.length === 0) {
               buffer += '';
           } else {
-              buffer += moment().format('Y/M/D HH:mm:ss') + ' - ' + message + '\n';
+              buffer += moment().format('Y/M/D HH:mm:ss') + '\n' + message + '\n';
           }
           this.textarea[0].value = buffer;
           this.buffer = '';

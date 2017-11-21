@@ -79,7 +79,7 @@ System.config({
     "moment": "npm:moment@2.19.2",
     "ngstorage": "npm:ngstorage@0.3.11",
     "ocLazyLoad": "github:ocombe/oclazyload@1.0.9",
-    "ramda": "npm:ramda@0.25.0/dist/ramda",
+    "ramda": "npm:ramda@0.25.0/dist/ramda.min",
     "systemjs/plugin-css": "github:systemjs/plugin-css@0.1.36",
     "ui-router-extras": "npm:ui-router-extras@0.0.14",
     "github:angular-ui/ui-router@0.2.18": {
