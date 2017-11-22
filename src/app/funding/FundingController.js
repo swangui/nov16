@@ -1,6 +1,25 @@
-const R = require('ramda');
+const R = require('ramdajs');
 
 import moment from 'moment';
+import toastr from 'toastr';
+
+toastr.options = {
+  'closeButton': false,
+  'debug': false,
+  'newestOnTop': false,
+  'progressBar': false,
+  'positionClass': 'toast-top-center',
+  'preventDuplicates': false,
+  'onclick': null,
+  'showDuration': '300',
+  'hideDuration': '1000',
+  'timeOut': '5000',
+  'extendedTimeOut': '1000',
+  'showEasing': 'swing',
+  'hideEasing': 'linear',
+  'showMethod': 'fadeIn',
+  'hideMethod': 'fadeOut'
+};
 
 export default class FundingController{
 
@@ -8,6 +27,7 @@ export default class FundingController{
   constructor($scope, $localStorage, ConsoleService, BitfinexApi){
       let ctrl = this;
 
+      this.ConsoleService = ConsoleService;
       this.$scope = $scope;
       this.$localStorage = $localStorage;
       this.BitfinexApi = BitfinexApi;
@@ -16,6 +36,10 @@ export default class FundingController{
       this.sIndex = 0;
       this.fundingStats = [];
       this.fundingProvided = [];
+      this.isWssConnecting = false;
+      this.isWssConnected = false;
+      this.authStatus = null;
+      this.permission = [];
 
       if ($localStorage.api) {
           $scope.$applyAsync(() => {
@@ -24,8 +48,18 @@ export default class FundingController{
           });
       }
 
-      this.establishWssConnection(() => {
-          this.BitfinexApi.authenticate(ctrl.api_key, ctrl.api_secret);
+      this.BitfinexApi.onWssDisconnect((data) => {
+          this.updateAuthStatus('disconnected');
+      });
+
+      this.BitfinexApi.onAuth((data) => {
+          this.setConnectingStatus(false);
+          if (data.status === 'OK') {
+              this.updateAuthStatus('succeeded');
+              this.setPermission(data.caps);
+          } else {
+              this.updateAuthStatus('failed');
+          }
       });
 
       this.BitfinexApi.onWalletSnapshot((data) => {
@@ -123,6 +157,43 @@ export default class FundingController{
       });
   }
 
+  updateAuthStatus(status) {
+      if (status === 'succeeded') {
+          const msg = 'Successfully authenticated';
+          this.setConnectionStatus(true);
+          toastr['success'](msg);
+          this.ConsoleService.log(msg);
+      }
+      else if (status === 'failed') {
+          const msg = 'Authentication Failed';
+          this.setConnectionStatus(false);
+          toastr['error'](msg);
+          this.ConsoleService.log(msg);
+      }
+      else if (status === 'disconnected') {
+          const msg = 'Disconnected';
+          if (this.authStatus !== 'failed') {
+              toastr['success'](msg);
+          }
+          this.setConnectionStatus(false);
+      }
+      this.authStatus = status;
+      this.$scope.$apply();
+  }
+
+  setConnectingStatus(isConnecting) {
+      this.isWssConnecting = isConnecting;
+  }
+
+  setConnectionStatus(isConnected) {
+      this.isWssConnected = isConnected;
+      this.$scope.$apply();
+  }
+
+  setPermission(permission) {
+      this.permission = R.toPairs(permission);
+  }
+
   updateFundingStats(stats) {
       this.fundingStats = stats;
       this.$scope.$apply();
@@ -139,6 +210,17 @@ export default class FundingController{
           key: this.api_key,
           secret: this.api_secret
       };
+  }
+
+  connectWss() {
+      this.setConnectingStatus(true);
+      this.establishWssConnection(() => {
+          this.BitfinexApi.authenticate(this.api_key, this.api_secret);
+      });
+  }
+
+  disconnectWss() {
+      this.BitfinexApi.disconnectWss();
   }
 
   establishWssConnection(callback) {

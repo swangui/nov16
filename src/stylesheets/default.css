@@ -1,4 +1,7 @@
 /**/
+html {
+  overflow-x: hidden;
+}
 html, body {
   height: 100%;
 }
@@ -51,15 +54,57 @@ nav {
   margin: 1px;
   width: 100%;
 }
-.inner-panel.console {
+.viewport {
   flex: 1 1 100%;
-  padding: 0;
+  border-left: 2px solid #d3edff;
+  border-top: 2px solid #d3edff;
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+}
+.vp-row {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: stretch;
+}
+.vp-row.first-row {
+}
+.vp-row.second-row {
+  flex: 0 1 auto;
+}
+.vp-row.third-row {
+  flex: 1 1 auto;
+}
+.bloc {
+  flex: 1 1 auto;
+  border: 2px solid #ccc;
+  border-right: none;
+  border-bottom: none;
+  padding: 0 10px;
+  z-index: 0;
+}
+.bloc.bloc-perf {
+  flex: 1 0 240px;
+}
+.bloc.bloc-funding-book {
+  flex: 1 0 600px;
+}
+.bloc.bloc-table {
+  padding-bottom: 20px;
+}
+.bloc.bloc-console {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
 }
 console {
   flex: 1 1 100%;
   display: flex;
-  flex-direction: column;
+  margin: 0 -10px;
+  min-height: 300px;
 }
 console>textarea {
   flex: 1 1 100%;
@@ -71,38 +116,6 @@ console>textarea {
   border: none;
   font-size: 11px;
 }
-.viewport {
-  flex: 1 1 100%;
-  border-left: 2px solid #d3edff;
-  border-top: 2px solid #d3edff;
-  display: flex;
-  flex-direction: column;
-}
-.vp-row {
-  flex: 1 1 50%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  align-content: stretch;
-}
-.vp-row.first-row {
-  flex: 0 0 auto;
-}
-.bloc {
-  flex: 1 0 50%;
-  border: 2px solid #ccc;
-  border-right: none;
-  border-bottom: none;
-  padding: 0 10px;
-  min-height: 200px;
-  z-index: 0;
-}
-.bloc.perf {
-  flex: 1 0 240px;
-}
-.bloc.funding-book {
-  flex: 1 0 600px;
-}
 .scrollable-table {
   min-width: 550px;
   height: 200px;
@@ -113,7 +126,7 @@ console>textarea {
   height: 26px;
   width: 100%;
   background: #fff;
-  position: fixed;
+  position: absolute;
   margin-top: -1px;
 }
 .scrollable-table td>div {
@@ -172,4 +185,8 @@ input[type="radio"], input[type="checkbox"] {
 .radio {
   margin-top: 0 !important;
   left: 10px;
+}
+.disconnected {
+  padding: 10px 0 20px;
+  text-align: center;
 }

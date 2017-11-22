@@ -21,11 +21,29 @@ class BitfinexApi{
         }
     }
 
-    ConsoleService.log('wss url =>', this.apiConfig.wss.url);
+    ConsoleService.log('WSS API', this.apiConfig.wss.url);
   }
 
   addEventHandler(eventType, callback) {
     this.eventHandler[eventType] = callback;
+  }
+
+  getEventHandler(eventType) {
+    const handler = this.eventHandler[eventType];
+    if (typeof(handler) === 'function') {
+        return handler;
+    } else {
+        console.warn('Event Handler not set', eventType);
+        return () => {};
+    }
+  }
+
+  onWssDisconnect(callback) {
+    this.addEventHandler('wss-disconnect', callback);
+  }
+
+  onAuth(callback) {
+    this.addEventHandler('auth', callback);
   }
 
   onWalletSnapshot(callback) {
@@ -38,21 +56,31 @@ class BitfinexApi{
 
   dispatchChannels(data) {
     if (Array.isArray(data) === false) {
-        this.ConsoleService.rx(JSON.stringify(data));
+
+        //this.ConsoleService.rx(JSON.stringify(data));
+
+        if (data.hasOwnProperty('event') === true) {
+            this.getEventHandler(data.event)(data);
+        }
     } else {
         const chId = data[0];
         const chName = data[1];
+
         this.ConsoleService.rx(chId, chName);
 
-        const handler = this.eventHandler[chName];
-        if (typeof(handler) === 'function') {
-            handler(data);
-        }
+        this.getEventHandler(chName)(data);
+    }
+  }
+
+  disconnectWss() {
+    if (this.wss) {
+        this.wss.close();
     }
   }
 
   establishWssConnection(callback) {
-    this.ConsoleService.log('Establishing wss connection');
+    this.disconnectWss();
+    this.ConsoleService.log('Establishing WSS connection');
     const url = this.apiConfig.wss.url;
     this.wss = new WebSocket(url);
     this.wss.onmessage = (msg) => {
@@ -60,8 +88,12 @@ class BitfinexApi{
         this.dispatchChannels(data);
     };
     this.wss.onopen = () => {
-        this.ConsoleService.log('wss connection established');
+        this.ConsoleService.log('WSS connection established');
         callback();
+    }
+    this.wss.onclose = (data) => {
+        this.ConsoleService.log('WSS connection disconnected');
+        this.getEventHandler('wss-disconnect')(data);
     }
   }
 

@@ -6,6 +6,8 @@ class ConsoleService{
   constructor($localStorage) {
       this.textarea = null;
       this.buffer = '';
+      this.isScrollEventOptimized = false;
+      this.isAutoScroll = true;
   }
 
   ready() {
@@ -16,17 +18,30 @@ class ConsoleService{
       let messages = Array.prototype.slice.call(arguments);
       let message = messages.join(' ');
       if (!this.textarea) {
-          this.buffer += moment().format('Y/M/D HH:mm:ss') + '\n' + message + '\n';
+          this.buffer += moment().format('Y/M/D HH:mm:ss') + ' - ' + message + '\n';
       } else {
           let buffer = this.buffer + this.textarea[0].value;
           if (arguments.length === 0) {
               buffer += '';
           } else {
-              buffer += moment().format('Y/M/D HH:mm:ss') + '\n' + message + '\n';
+              buffer += moment().format('Y/M/D HH:mm:ss') + ' - ' + message + '\n';
           }
           this.textarea[0].value = buffer;
+          if (this.isScrollEventOptimized === false) {
+              this.optimizeScrollEvent();
+          }
+          if (this.isAutoScroll === true) {
+              this.textarea[0].scrollTop = this.textarea[0].scrollHeight;
+          }
           this.buffer = '';
       }
+  }
+
+  optimizeScrollEvent() {
+      this.textarea[0].onclick = () => {
+          this.isAutoScroll = !this.isAutoScroll;
+      }
+      this.isScrollEventOptimized = true;
   }
 
   rx() {

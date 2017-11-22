@@ -58,7 +58,7 @@ System.config({
       "deps": [
         "npm:jquery@3.2.1/dist/jquery"
       ]
-    },
+    }
   },
 
   map: {
@@ -79,9 +79,15 @@ System.config({
     "moment": "npm:moment@2.19.2",
     "ngstorage": "npm:ngstorage@0.3.11",
     "ocLazyLoad": "github:ocombe/oclazyload@1.0.9",
-    "ramda": "npm:ramda@0.25.0/dist/ramda.min",
+    "ramda": "npm:ramda@0.25.0",
+    "ramdajs": "npm:ramda@0.25.0/dist/ramda.min",
     "systemjs/plugin-css": "github:systemjs/plugin-css@0.1.36",
+    "toastr": "github:CodeSeven/toastr@2.1.3",
     "ui-router-extras": "npm:ui-router-extras@0.0.14",
+    "github:CodeSeven/toastr@2.1.3": {
+      "css": "github:systemjs/plugin-css@0.1.36",
+      "jquery": "npm:jquery@3.2.1"
+    },
     "github:angular-ui/ui-router@0.2.18": {
       "angular": "github:angular/bower-angular@1.5.5"
     },
