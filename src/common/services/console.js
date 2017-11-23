@@ -6,9 +6,23 @@ class ConsoleService{
   constructor($localStorage, $rootScope) {
       this.$rootScope = $rootScope;
       this.textarea = null;
-      this.buffer = '';
       this.isScrollEventOptimized = false;
       this.isAutoScroll = true;
+      const welcome = `
+            Welcome to
+   /$$                                 /$$       /$$ /$$   /$$    
+  | $$                                | $$      | $$|__/  | $$    
+  | $$        /$$$$$$  /$$$$$$$   /$$$$$$$  /$$$$$$$ /$$ /$$$$$$  
+  | $$       /$$__  $$| $$__  $$ /$$__  $$ /$$__  $$| $$|_  $$_/  
+  | $$      | $$$$$$$$| $$  \\ $$| $$  | $$| $$  | $$| $$  | $$    
+  | $$      | $$_____/| $$  | $$| $$  | $$| $$  | $$| $$  | $$ /$$
+  | $$$$$$$$|  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$| $$  |  $$$$/
+  |________/ \\_______/|__/  |__/ \\_______/ \\_______/|__/   \\___/  
+
+            Enjoy making $money$
+
+`;
+      this.buffer = welcome;
   }
 
   ready() {
