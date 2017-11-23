@@ -32,8 +32,6 @@ export default class FundingController{
       this.$localStorage = $localStorage;
       this.BitfinexApi = BitfinexApi;
 
-      this.strategy = ['FRR', 'CI', 'ON'];
-      this.sIndex = 0;
       this.fundingStats = [];
       this.fundingProvided = [];
       this.isWssConnecting = false;

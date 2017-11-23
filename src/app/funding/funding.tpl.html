@@ -1,199 +1,163 @@
 <div class="inner-space">
   <div class="sidebar">
-    <h5 class="hd-toggler"
-        ng-init="
-          isConfigVisible = true;
-        "
-        ng-click="
-          isConfigVisible = !!!isConfigVisible;
-        ">
-      <i class="fa"
-         ng-class="
-           isConfigVisible === true ? 'fa-angle-down' : 'fa-angle-right'
-         " aria-hidden="true"></i>
-      API &amp; Connection
-    </h5>
-    <div ng-show="isConfigVisible === true" class="inner-panel">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group form-group-sm">
-            <label for="api_key">Key</label>
-            <input type="text" class="form-control input-sm" id="api_key"
-                   ng-model="ctrl.api_key"
-                   ng-change="ctrl.saveApiCredentials()">
+    <div class="inner-panel">
+      <uib-tabset active="0">
+        <uib-tab index="0">
+          <uib-tab-heading>
+            <i class="fa fa-circle" aria-hidden="true"
+               ng-style="{
+                  'color': ctrl.isWssConnected === true ? 'lightgreen' : 'lightcoral',
+               }"></i>
+            Connection
+          </uib-tab-heading>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group form-group-sm">
+                <label for="api_key">Key</label>
+                <input type="text" class="form-control input-sm" id="api_key"
+                       ng-model="ctrl.api_key"
+                       ng-change="ctrl.saveApiCredentials()">
+              </div>
+              <div class="form-group form-group-sm">
+                <label for="api_secret">Secret</label>
+                <input type="text" class="form-control input-sm" id="api_secret"
+                       ng-model="ctrl.api_secret"
+                       ng-change="ctrl.saveApiCredentials()">
+              </div>
+              <div class="form-group form-group-sm"
+                   ng-if="ctrl.isWssConnected === true">
+                <label for="api_permission">Permission</label>
+                <table class="table table-condensed">
+                  <tr>
+                    <td>Module</td>
+                    <td>Read</td>
+                    <td>Write</td>
+                  </tr>
+                  <tr ng-repeat="p in ctrl.permission">
+                    <td>{{p[0]}}</td>
+                    <td>
+                      <i class="fa fa-check-square" aria-hidden="true"
+                         ng-if="p[1].read === 1"></i>
+                      <i class="fa fa-square-o" aria-hidden="true"
+                         ng-if="p[1].read === 0"></i>
+                    </td>
+                    <td>
+                      <i class="fa fa-check-square" aria-hidden="true"
+                         ng-if="p[1].write === 1"></i>
+                      <i class="fa fa-square-o" aria-hidden="true"
+                         ng-if="p[1].write === 0"></i>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="form-group form-group-sm">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <button class="btn btn-info btn-block"
+                            ng-if="ctrl.isWssConnected === false"
+                            ng-click="ctrl.connectWss()">
+                      <i class="fa fa-exclamation-triangle" aria-hidden="true"
+                         ng-show="ctrl.authStatus === 'failed'"
+                         uib-tooltip="Authentication failed"></i>
+                      {{ctrl.isWssConnecting === true ? 'Connecting...' : 'Connect'}}
+                    </button>
+                    <button class="btn btn-info btn-block"
+                            ng-if="ctrl.isWssConnected === true"
+                            ng-click="ctrl.disconnectWss()">
+                      Disconnect
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group form-group-sm">
-            <label for="api_secret">Secret</label>
-            <input type="text" class="form-control input-sm" id="api_secret"
-                   ng-model="ctrl.api_secret"
-                   ng-change="ctrl.saveApiCredentials()">
+        </uib-tab>
+        <uib-tab index="1" heading="Strategy">
+          <div class="row">
+            <div class="col-xs-6">
+              <form class="form-inline nl">
+                <div class="form-group-inline form-group-sm">
+                  <label for="term">Term</label>
+                  <div class="input-group">
+                    <input type="number" min="2" max="30" class="form-control input-sm text-right" id="term" value="30">
+                    <span class="input-group-addon">days</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-xs-6">
+              <form class="form-inline nl">
+                <div class="form-group-inline form-group-sm">
+                  <label for="chunk-size">Chunk Size</label>
+                  <div class="input-group">
+                    <input type="number" min="0" class="form-control input-sm text-right" id="chunk-size" value="1000">
+                    <span class="input-group-addon">$</span>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-          <div class="form-group form-group-sm"
-               ng-if="ctrl.isWssConnected === true">
-            <label for="api_permission">Permission</label>
-            <table class="table table-condensed">
-              <tr>
-                <td>Module</td>
-                <td>Read</td>
-                <td>Write</td>
-              </tr>
-              <tr ng-repeat="p in ctrl.permission">
-                <td>{{p[0]}}</td>
-                <td>
-                  <i class="fa fa-check-square" aria-hidden="true"
-                     ng-if="p[1].read === 1"></i>
-                  <i class="fa fa-square-o" aria-hidden="true"
-                     ng-if="p[1].read === 0"></i>
-                </td>
-                <td>
-                  <i class="fa fa-check-square" aria-hidden="true"
-                     ng-if="p[1].write === 1"></i>
-                  <i class="fa fa-square-o" aria-hidden="true"
-                     ng-if="p[1].write === 0"></i>
-                </td>
-              </tr>
-            </table>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group form-group-sm">
+                <label>Strategy</label>
+                <uib-tabset active="0">
+                  <uib-tab index="0" heading="FRR">
+                    <div class="form-group-inline form-group-sm">
+                    <div>Offer Rate = FRR + Delta</div>
+                      <label for="frr_delta">Delta</label>
+                      <div class="input-group">
+                        <input type="number" min="-100" max="0" class="form-control input-sm text-right" id="frr_delta" value="0" step="1">
+                        <span class="input-group-addon">%</span>
+                      </div>
+                    </div>
+                  </uib-tab>
+                  <uib-tab index="1" heading="Cut In">
+                    <div>Offer Rate =  Lowest Ask + Delta</div>
+                    <div class="form-group-inline form-group-sm">
+                      <label for="ci_min_perc">Delta</label>
+                      <div class="input-group">
+                        <input type="number" min="-100" max="0" class="form-control input-sm text-right" id="ci_min_perc" value="0" step="1">
+                        <span class="input-group-addon">%</span>
+                      </div>
+                    </div>
+                    <div>AND</div>
+                    <div>Offer rate &gt; Min Rate</div>
+                    <div class="form-group-inline form-group-sm">
+                      <label for="ci_min_rate">Min Rate</label>
+                      <div class="input-group">
+                        <input type="number" min="0" max="2" class="form-control input-sm text-right" id="ci_min_rate" value="0.00" step="0.001">
+                        <span class="input-group-addon">%</span>
+                      </div>
+                    </div>
+                  </uib-tab>
+                  <uib-tab index="2" heading="Offer Now">
+                    <div>Offer Rate = Highest Bid</div>
+                    <div>AND</div>
+                    <div>Offer Rate &gt; Min Rate</div>
+                    <div class="form-group-inline form-group-sm">
+                      <label for="on_min_rate">Min Rate</label>
+                      <div class="input-group">
+                        <input type="number" min="0" max="1" class="form-control input-sm text-right" id="on_min_rate" value="0.00" step="0.001">
+                        <span class="input-group-addon">%</span>
+                      </div>
+                    </div>
+                  </uib-tab>
+                </uib-tabset>
+              </div>
+            </div>
           </div>
-          <div class="form-group form-group-sm">
-            <div class="row">
-              <div class="col-xs-12">
-                <button class="btn btn-info btn-block"
-                        ng-if="ctrl.isWssConnected === false"
-                        ng-click="ctrl.connectWss()">
-                  <i class="fa fa-exclamation-triangle" aria-hidden="true"
-                     ng-show="ctrl.authStatus === 'failed'"
-                     uib-tooltip="Authentication failed"></i>
-                  {{ctrl.isWssConnecting === true ? 'Connecting...' : 'Connect'}}
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group form-group-sm">
+                <button class="btn btn-info btn-block">
+                  Start
                 </button>
-                <button class="btn btn-info btn-block"
-                        ng-if="ctrl.isWssConnected === true"
-                        ng-click="ctrl.disconnectWss()">
-                  Disconnect
-                </button>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <h5 class="hd-toggler"
-        ng-init="
-          isRunnerVisible = true;
-        "
-        ng-click="
-          isRunnerVisible = !!!isRunnerVisible;
-        ">
-      <i class="fa"
-         ng-class="
-           isRunnerVisible === true ? 'fa-angle-down' : 'fa-angle-right'
-         " aria-hidden="true"></i>
-      Strategy Runner
-    </h5>
-    <div ng-show="isRunnerVisible === true" class="inner-panel">
-      <div class="row">
-        <div class="col-xs-6">
-          <form class="form-inline nl">
-            <div class="form-group-inline form-group-sm">
-              <label for="term">Term</label>
-              <div class="input-group">
-                <input type="number" min="2" max="30" class="form-control input-sm text-right" id="term" value="30">
-                <span class="input-group-addon">days</span>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-xs-6">
-          <form class="form-inline nl">
-            <div class="form-group-inline form-group-sm">
-              <label for="chunk-size">Chunk Size</label>
-              <div class="input-group">
-                <input type="number" min="0" class="form-control input-sm text-right" id="chunk-size" value="1000">
-                <span class="input-group-addon">$</span>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group form-group-sm">
-            <label for="strategy">Strategy</label>
-            <div class="radio">
-              <label class="label-inline"
-                     ng-class="ctrl.sIndex === 0 ? 'hl' : ''">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
-                       ng-checked="ctrl.sIndex === 0"
-                       ng-click="ctrl.sIndex = 0">
-                FRR
-              </label>
-              <label class="label-inline"
-                     ng-class="ctrl.sIndex === 1 ? 'hl' : ''">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"
-                       ng-checked="ctrl.sIndex === 1"
-                       ng-click="ctrl.sIndex = 1">
-                Cut In
-              </label>
-              <label class="label-inline"
-                     ng-class="ctrl.sIndex === 2 ? 'hl' : ''">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"
-                       ng-checked="ctrl.sIndex === 2"
-                       ng-click="ctrl.sIndex = 2">
-                Offer Now
-              </label>
-            </div>
-            <div ng-show="ctrl.sIndex === 0" class="sub-form">
-              <div class="form-group-inline form-group-sm">
-              <div>Offer Rate = FRR + Delta</div>
-                <label for="frr_delta">Delta</label>
-                <div class="input-group">
-                  <input type="number" min="-100" max="0" class="form-control input-sm text-right" id="frr_delta" value="0" step="1">
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
-            </div>
-            <div ng-show="ctrl.sIndex === 1" class="sub-form">
-              <div>Offer Rate =  Lowest Ask + Delta</div>
-              <div class="form-group-inline form-group-sm">
-                <label for="ci_min_perc">Delta</label>
-                <div class="input-group">
-                  <input type="number" min="-100" max="0" class="form-control input-sm text-right" id="ci_min_perc" value="0" step="1">
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
-              <div>AND</div>
-              <div>Offer rate &gt; Min Rate</div>
-              <div class="form-group-inline form-group-sm">
-                <label for="ci_min_rate">Min Rate</label>
-                <div class="input-group">
-                  <input type="number" min="0" max="2" class="form-control input-sm text-right" id="ci_min_rate" value="0.00" step="0.001">
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
-            </div>
-            <div ng-show="ctrl.sIndex === 2" class="sub-form">
-              <div>Offer Rate = Highest Bid</div>
-              <div>AND</div>
-              <div>Offer Rate &gt; Min Rate</div>
-              <div class="form-group-inline form-group-sm">
-                <label for="on_min_rate">Min Rate</label>
-                <div class="input-group">
-                  <input type="number" min="0" max="1" class="form-control input-sm text-right" id="on_min_rate" value="0.00" step="0.001">
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group form-group-sm">
-            <button class="btn btn-info btn-block">
-              Start
-            </button>
-          </div>
-        </div>
-      </div>
+        </uib-tab>
+      </uib-tabset>
     </div>
   </div>
   <div class="viewport">

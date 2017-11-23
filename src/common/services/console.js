@@ -3,7 +3,8 @@ import moment from 'moment';
 
 class ConsoleService{
   /*@ngInject*/
-  constructor($localStorage) {
+  constructor($localStorage, $rootScope) {
+      this.$rootScope = $rootScope;
       this.textarea = null;
       this.buffer = '';
       this.isScrollEventOptimized = false;
@@ -30,7 +31,7 @@ class ConsoleService{
           if (this.isScrollEventOptimized === false) {
               this.optimizeScrollEvent();
           }
-          if (this.isAutoScroll === true) {
+          if (this.getAutoScroll() === true) {
               this.textarea[0].scrollTop = this.textarea[0].scrollHeight;
           }
           this.buffer = '';
@@ -39,9 +40,19 @@ class ConsoleService{
 
   optimizeScrollEvent() {
       this.textarea[0].onclick = () => {
-          this.isAutoScroll = !this.isAutoScroll;
+          this.toggleAutoScroll();
       }
       this.isScrollEventOptimized = true;
+  }
+
+  toggleAutoScroll() {
+      const boolean = !this.isAutoScroll;
+      this.isAutoScroll = boolean;
+      this.$rootScope.$broadcast('console_autoscroll_toggled');
+  }
+
+  getAutoScroll() {
+      return this.isAutoScroll;
   }
 
   rx() {
